@@ -37,6 +37,22 @@ class ConsumptionTaxBuilder(AbstractTaxCalcBuilder):
         message = " ".join(["あなたの払う税金は",str(tax),"円です"])
         print(message)
 
+class DeductionTaxBuilder(AbstractTaxCalcBuilder):
+    def __init__(self):
+        self.rate = 0
+        self.total = 0
+        
+    def set_total(self,total):
+        self.total = total
+        
+    def calc_tax(self,rate):
+        self.rate = -1 * rate
+    
+    def message_tax(self):
+        tax = self.total * self.rate
+        message = " ".join(["あなたが還付される税金は",str(tax),"円です"])
+        print(message)
+
 class ConsumptionDirector():
     def __init__(self, builder):
         self.__builder = builder
@@ -48,8 +64,8 @@ class ConsumptionDirector():
         
 
 def main():
+    
     tax = ConsumptionDirector(ConsumptionTaxBuilder)
-    print(tax)
     tax.construct()
     # tax.set_total(1000)
     # tax.calc_tax(0.3)
