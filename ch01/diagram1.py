@@ -123,3 +123,36 @@ class SvgDiagram:
         self.diagram = [SVG_START.format(**locals())]
         outline = SVG_RECTANGLE(0,0,width,height,"lightgreen","black")
         self.diagram.append(outline.svg)
+
+    def add(self,component):
+        self.diagram.append(component.svg)
+
+    def save(self,filenameOrFile):
+        file = None if isinstance(filenameOrFile, str) else filenameOrFile
+        try:
+            if file is None:
+                file = open(filenameOrFile,"w",encoding="utf-8")
+            file.write("\n".join(self.diagram))
+            file.write("\n" + SVG_END)
+        finally:
+            if isinstance(filenameOrFile, str) and file is not None:
+                file.close()
+
+class SvgRectangle:
+    def __init__(self,x,y,width,height,fill,stroke):
+        x *= SVG_SCALE
+        y *= SVG_SCALE
+        width *= SVG_SCALE
+        height *= SVG_SCALE
+        self.svg = SVG_RECTANGLE.format(**locals())
+
+class SvgText:
+
+    def __init__(self,x,y,text,fontsize):
+        x *= SVG_SCALE
+        y *= SVG_SCALE
+        fontsize *= SVG_SCALE // 10
+        self.svg = SVG_TEXT.format(**locals())
+
+if __name__ == '__main__':
+    main()
