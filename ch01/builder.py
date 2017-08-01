@@ -64,7 +64,6 @@ class ConsumptionDirector():
         
 
 def main():
-    
     tax = ConsumptionDirector(ConsumptionTaxBuilder)
     tax.construct()
     # tax.set_total(1000)
