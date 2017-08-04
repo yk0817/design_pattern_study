@@ -1,27 +1,47 @@
-import os
 import sys
-import tempfile
-import numpy
+import openpyxl
+import glob
+import xlrd
+import re
+from abc import ABCMeta, abstractmethod
+
+# 抽象メソッド
+class AbstExcelFactory(metaclass=ABCMeta):
+    # デコレータをつけると、サブクラスはオーバーライドしないとエラーになる。
+    @abstractmethod
+    def read_file():
+        pass
+
+class XlsRead(AbstExcelFactory):
+    def __init__(self,file):
+        self.__file_name = file
+        print(self.__file_name + "の読み取りを行います。")
+
+    def read_file(arg):
+        pass
+
+
+class MxlsRead(AbstExcelFactory):
+    def __init__(self,file):
+        self.__file_name = file
+        print(self.__file_name + "の読み取りを行います。")
+
+    def read_file(arg):
+        pass
 
 def main():
-    MathFactory
+    # インスタンス作成
+    xls_instance = XlsRead()
+    mxls_instance = MxlsRead()
+    worksheets = glob.glob('./*')
 
-# abstarct factory
-# エクセル読み込み
-# テキストファイル作成
-# テキストファイル書き込み
+    for worksheet in worksheets:
+        if re.match(r"\.xls$",worksheet):
 
-# 具体的にどのように区分けを行うか。
-# ファイル形式によって変更を行う。
-# xlsm、xls
+        elif re.match(r"\.xlsm$",worsheet):
 
-class MathFactory:
-    def make_file(Class,file_type):
-        return Class.File(file_type)
-
-    def make_calc(*arg):
-        return Class.Calc(*args)
-
+        else:
+            pass
 
 
 if __name__ == '__main__':
