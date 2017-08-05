@@ -6,13 +6,13 @@ import re
 from abc import ABCMeta, abstractmethod
 
 # 抽象メソッド
-class ExcelFactory(metaclass=ABCMeta):
+class ExcelTemplate(metaclass=ABCMeta):
     # デコレータをつけると、サブクラスはオーバーライドしないとエラーになる。
     @abstractmethod
     def read_file():
         pass
 
-class XlsRead(ExcelFactory):
+class XlsRead(ExcelTemplate):
     def __init__(self,file):
         self.__file_name = file
         print(self.__file_name + "の読み取りを行います。")
@@ -20,7 +20,7 @@ class XlsRead(ExcelFactory):
     def read_file(self,worksheet):
         books = openpyxl.load_workbook(worksheet)
 
-class MxlsRead(ExcelFactory):
+class MxlsRead(ExcelTemplate):
     def __init__(self,file):
         self.__file_name = file
         print(self.__file_name + "の読み取りを行います。")
@@ -36,6 +36,7 @@ def main():
     # 実行ファイル元にエクセルファイルがあると想定
     worksheets = glob.glob('./*')
 
+    # xlsファイル、xlsmファイルに応じて処理切り替え
     for worksheet in worksheets:
         if re.match(r"\.xls$",worksheet):
             xls_instance.read_file(worksheet)
