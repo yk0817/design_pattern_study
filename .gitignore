@@ -1,3 +1,6 @@
 *.xls
 *.xlsm
 *.xlsx
+*/__pycache__/
+/cyImage/
+/Image/
