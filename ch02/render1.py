@@ -2,67 +2,25 @@ import abc
 import collections
 import sys
 import textwrap
-if sys.version_info[:2] < (3,2):
-    from xml.sax.saxutils import escape
-else:
-    from html import escape
+from html import escape
 
-if sys.version_info[:2] >= (3,3):
-    class Renderer(metaclass=abc.ABCMeta):
-        @classmethod
-        def __subclasshook__(Class,Subclass):
-            if Class is Renderer:
-                attributes = collections.ChainMap(*(Superclass.__dict__
-                        for Superclass in Subclass.__mro__))
-                methods = ("header","paragraph","footer")
-                if all(method in attributes for method in methods):
+class Renderer(metaclass=abc.ABCMeta):
+
+    @classmethod
+    def __subclasshook__(Class,Subclass):
+        if Class is Renderer:
+            needed = {"header","paragraph","footer"}
+            # print(Subclass.__mro__)
+            # __mro__  サブクラスのiter
+            for Superclass in Subclass.__mro__:
+                for meth in needed.copy():
+                    # スーパークラスをディクショナリ化
+                    if meth in Superclass.__dict__:
+                        # 集合から削除
+                        needed.discard(meth)
+                if not needed:
                     return True
-            return NotImplemented
-else:
-    class Renderer(metaclass=abc.ABCMeta):
-
-        @classmethod
-        def __subclasshook__(Class,Subclass):
-            if Class is Renderer:
-                needed = {"header","paragraph","footer"}
-                for Superclass in Subclass.__mro__:
-                    for meth in needed.copy():
-                        if meth in Superclass.__dict__:
-                            needed.discard(meth)
-                    if not needed:
-                        return True
-            return NotImplemented
-
-MESSAGE = """This is a very short {} paragraph that demonstrates
-the simple {} class."""
-
-def main():
-    paragraph1 = MESSAGE.format("plain-text", "TextRenderer")
-    paragraph2 = """This is another short paragraph just so that we can
-see two paragraphs in action."""
-    title = "Plain Text"
-    textPage = Page(title, TextRenderer(22))
-    textPage.add_paragraph(paragraph1)
-    textPage.add_paragraph(paragraph2)
-    textPage.render()
-
-    print()
-
-    paragraph1 = MESSAGE.format("HTML", "HtmlRenderer")
-    title = "HTML"
-    file = sys.stdout
-    htmlPage = Page(title, HtmlRenderer(HtmlWriter(file)))
-    htmlPage.add_paragraph(paragraph1)
-    htmlPage.add_paragraph(paragraph2)
-    htmlPage.render()
-
-    try:
-        page = Page(title, HtmlWriter())
-        page.render()
-        print("ERROR! rendering with an invalid renderer")
-    except TypeError as err:
-        print(err)
-
+        return NotImplemented
 class Page:
 
     def __init__(self,title,renderer):
@@ -141,6 +99,36 @@ class HtmlRenderer:
     def footer(self):
         self.htmlWriter.end_body()
         self.htmlWriter.footer()
+        
+MESSAGE = """This is a very short {} paragraph that demonstrates
+the simple {} class."""
+
+def main():
+    paragraph1 = MESSAGE.format("plain-text", "TextRenderer")
+    paragraph2 = """This is another short paragraph just so that we can
+see two paragraphs in action."""
+    title = "Plain Text"
+    textPage = Page(title, TextRenderer(22))
+    textPage.add_paragraph(paragraph1)
+    textPage.add_paragraph(paragraph2)
+    textPage.render()
+
+    print()
+
+    paragraph1 = MESSAGE.format("HTML", "HtmlRenderer")
+    title = "HTML"
+    file = sys.stdout
+    htmlPage = Page(title, HtmlRenderer(HtmlWriter(file)))
+    htmlPage.add_paragraph(paragraph1)
+    htmlPage.add_paragraph(paragraph2)
+    htmlPage.render()
+
+    try:
+        page = Page(title, HtmlWriter())
+        page.render()
+        print("ERROR! rendering with an invalid renderer")
+    except TypeError as err:
+        print(err)
 
 
 if __name__ == '__main__':
