@@ -36,6 +36,6 @@ class TextMakeFormat(TextMake,Format):
 
 
 if __name__ == '__main__':
-    tt = TextMakeFormat('おはようございます。\n今日も元気で頑張りましょう。')
-    tt.make_csv("csv_file")
-    tt.make_txt("txt_file")
+    textobj = TextMakeFormat('おはようございます。\n今日も元気で頑張りましょう。')
+    textobj.make_csv("csv_file")
+    textobj.make_txt("txt_file")
