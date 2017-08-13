@@ -9,7 +9,7 @@ class Banner:
         print('({})'.format(self.__string))
 
     def show_with_aster(self):
-        print('({0})'.format(self.__string))
+        print('*({})*'.format(self.__string))
 
 
 class Printer(metaclass=abc.ABCMeta):
