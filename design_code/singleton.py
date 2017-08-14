@@ -1,5 +1,5 @@
 class Singleton:
-    _instance = None
+    initial_instance_name = None
     
     # クラスインスタンス化した際、__new__→__init__が呼び出される。
     def __init__(self):
@@ -8,10 +8,10 @@ class Singleton:
     def __new__(self):
         print("new")
         
-        if self._instance is None:
-            self._instance = super().__new__(self)
+        if self.initial_instance_name is None:
+            self.initial_instance_name = super().__new__(self)
         
-        return self._instance
+        return self.initial_instance_name
 
 if __name__ == '__main__':
     a = Singleton() #こんな感じで出力→<__main__.Singleton object at 0x106614438>
