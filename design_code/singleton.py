@@ -6,12 +6,12 @@ class Singleton:
         print("init")
     
     def __new__(self):
-        print("new")
         
-        if self.initial_instance_name is None:
-            self.initial_instance_name = super().__new__(self)
+        if Singleton.initial_instance_name is None:
+            print("new")
+            Singleton.initial_instance_name = super().__new__(self)
         
-        return self.initial_instance_name
+        return Singleton.initial_instance_name
 
 if __name__ == '__main__':
     a = Singleton() #こんな感じで出力→<__main__.Singleton object at 0x106614438>
