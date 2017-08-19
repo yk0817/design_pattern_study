@@ -21,11 +21,9 @@ class NumberGenerator(metaclass=abc.ABCMeta):
     def deleteObserver(self,observer):
         self.__observers.remove(observer)
     
-    def notifyObservers(self):
+    def notifyObservers(self,observer):
         for observer in self.__observers:
-            # print(observer)
-            print(self)
-            # observer.update(self)
+            observer.update(self)
     
     @abc.abstractmethod
     def getNumber(self):
@@ -50,12 +48,12 @@ class RandomNumberGenerator(NumberGenerator):
 
 class DigitObserver(Observer):
     def update(generator):
-        print("DigitObserver:{}".format(generator.get_number()))
+        print("DigitObserver:{}".format(generator.getNumber()))
         time.sleep(1)
 
 class GraphObserver(Observer):
     def update(self,generator):
-        count = generator.get_number()
+        count = generator.getNumber()
         print("graphobserver:")
         for i in range(count):
             print("*")
