@@ -11,7 +11,7 @@ class MultiplicationNumber(PlainNumber):
     
     def render(self,num):
         return self._number.render() * num
-        print(self._number.render())
+
     
 if __name__ == '__main__':
     plain_num = PlainNumber(11)
