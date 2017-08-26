@@ -38,6 +38,7 @@ end
 
 class DeleteFile < Command
   def initialize(path)
+    @path = path
     super("Delete file:#{path}")
   end
   
@@ -83,7 +84,7 @@ class CompositeCommand < Command
   
   def add_command(cmd)
     @commands << cmd
-    p @commands
+    # p @commands
   end
   def execute
     @commands.each do |cmd|
@@ -112,4 +113,7 @@ command_list.add_command(CreateFile.new("file1.txt","helloworld\n"))
 command_list.add_command(CopyFile.new("file1.txt","file2.txt"))
 command_list.add_command(DeleteFile.new("file1.txt"))
 
+command_list.execute
+puts(command_list.description)
+command_list.undo_execute
 
