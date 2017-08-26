@@ -45,7 +45,7 @@ class DeleteFile < Command
     if File.exists?(@path)
       @content = File.read(@path)
     end
-    File.delte(@path)
+    File.delete(@path)
   end
   
   def undo_execute
@@ -83,6 +83,7 @@ class CompositeCommand < Command
   
   def add_command(cmd)
     @commands << cmd
+    p @commands
   end
   def execute
     @commands.each do |cmd|
@@ -101,8 +102,10 @@ class CompositeCommand < Command
     @commands.each do |cmd|
       description += cmd.description + "\n"
     end
+    description
   end
 end
+
 
 command_list = CompositeCommand.new
 command_list.add_command(CreateFile.new("file1.txt","helloworld\n"))
