@@ -2,11 +2,11 @@ import abc
 import time
 
 
-class OddState(State):
+class OddState():
     def display_state(self):
         print("奇数")
     
-class EvenState(State):
+class EvenState():
     def display_state(self):
         print("偶数")
 
@@ -15,14 +15,18 @@ class CountTime(object):
         self.count = 0
     def count_up(self):
         self.count += 1
+        if self.count % 2 == 0:
+            return EvenState()
+        else:
+            return OddState()
 
 
 if __name__ == '__main__':
     count = CountTime()
     
     while True:
-        count.count_up()
-        if count.count % 2 == 0:
-            EvenState().display_state()
-        else:
-            OddState().display_state()
+        counter = count.count_up()
+        print(count.count)
+        counter.display_state()
+        time.sleep(0.3)
+    
