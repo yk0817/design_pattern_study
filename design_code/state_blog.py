@@ -10,11 +10,13 @@ class EvenState():
     def display_state(self):
         print("偶数")
 
-class CountTime(object):
+class CountTime():
     def __init__(self):
         self.count = 0
     def count_up(self):
         self.count += 1
+    
+    def change_state(self):
         if self.count % 2 == 0:
             return EvenState()
         else:
@@ -25,7 +27,8 @@ if __name__ == '__main__':
     count = CountTime()
     
     while True:
-        counter = count.count_up()
+        count.count_up()
+        counter = count.change_state()
         print(count.count)
         counter.display_state()
         time.sleep(0.3)
