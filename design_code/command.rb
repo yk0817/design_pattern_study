@@ -84,7 +84,6 @@ class CompositeCommand < Command
   
   def add_command(cmd)
     @commands << cmd
-    # p @commands
   end
   def execute
     @commands.each do |cmd|
