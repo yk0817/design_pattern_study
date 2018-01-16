@@ -10,7 +10,7 @@ class TaxCalcDirector():
         self.__builder.message_tax(self)
 
 class AbstractTaxCalcBuilder(metaclass=abc.ABCMeta):
-    # 抽象メソッドはデコレータで就職する
+    # 抽象メソッドはデコレータで継承する
     @abc.abstractmethod
     def set_total(self,total):
         pass
